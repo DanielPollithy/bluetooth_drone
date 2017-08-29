@@ -9,9 +9,6 @@ bt_mac = settings.get_own_bt_address()
 print('This devices bluetooth address is: {}'.format(bt_mac))
 
 
-
-
-
 def run(server_sock):
     client_sock, address = server_sock.accept()
 
