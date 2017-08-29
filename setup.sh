@@ -20,3 +20,6 @@ sudo pip install pybluez
 # TODO: install py proximity
 
 
+git clone https://github.com/ewenchou/bluetooth-proximity.git
+cd bluetooth-proximity
+sudo python setup.py install
