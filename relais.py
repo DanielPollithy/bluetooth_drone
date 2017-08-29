@@ -7,5 +7,5 @@ def switch_off():
 
 
 def switch_on():
-    popen = Popen(['sudo', '.hikey_control/touch_switch', 'on'])
+    popen = Popen(['sudo', './touch_switch', 'on'])
     popen.wait()
