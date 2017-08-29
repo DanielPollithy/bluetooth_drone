@@ -4,6 +4,7 @@ import bluetooth
 import time
 from bt_proximity import BluetoothRSSI
 import settings
+import relais
 
 bt_mac = settings.get_own_bt_address()
 print('This devices bluetooth address is: {}'.format(bt_mac))
@@ -75,9 +76,13 @@ def run(server_sock):
     if start_charging:
         print('START THE CHARGING NOW')
         # wait the charging time
+        print('opening the relais')
+        relais.switch_on()
         for i in range(10):
             print('.')
             time.sleep(settings.CHARGING_TIME/10.0)
+        print('closing the relais')
+        relais.switch_off()
         print('FINISHED charging')
         client_sock.send(json.dumps({'electricity': '10W'}))
     else:
