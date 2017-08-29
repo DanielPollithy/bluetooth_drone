@@ -8,19 +8,18 @@ import settings
 bt_mac = settings.get_own_bt_address()
 print('This devices bluetooth address is: {}'.format(bt_mac))
 
-server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
-port = 0x1001
 
-server_sock.bind(("", port))
-server_sock.listen(1)
 
-while True:
+
+def run(server_sock):
     client_sock, address = server_sock.accept()
 
     # only accept the peer
     if address[0] != settings.PEER_BT_ADDRESS:
+        print('Not awaited: {}'.format(address[0]))
         client_sock.close()
+        raise StandardError
 
     print("Accepted connection from ", address)
 
@@ -53,7 +52,7 @@ while True:
         print('The distance was too big to connect')
         client_sock.send(json.dumps({'accepted': False}))
         client_sock.close()
-        raise KeyboardInterrupt
+        raise StandardError
 
     # everything is o.k. The drone is close enough, so now we return the proceedings
     payload = json.dumps({'accepted': True, 'addr': settings.SERVER_ETHEREUM_ADDRESS})
@@ -81,11 +80,26 @@ while True:
         # wait the charging time
         time.sleep(settings.CHARGING_TIME)
         client_sock.send(json.dumps({'electricity': '10W'}))
-        client_sock.close()
     else:
         print('NO electricity wanted')
-        client_sock.close()
 
     client_sock.close()
-server_sock.close()
 
+
+
+
+server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+port = 0x1001
+server_sock.bind(("", port))
+server_sock.listen(1)
+
+while True:
+    try:
+        run(server_sock)
+    except StandardError:
+        print('Received a protocol error')
+        print('... Continue the loop')
+    except:
+        break
+
+server_sock.close()
