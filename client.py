@@ -1,4 +1,9 @@
+
 import bluetooth
+
+# bluetooth low energy scan
+from bluetooth.ble import DiscoveryService
+
 import time
 import json
 
@@ -32,13 +37,14 @@ def send_payload(address):
 
 if __name__ == '__main__':
     while True:
-        nearby_devices = bluetooth.discover_devices(lookup_names=True)
-        print("found %d devices" % len(nearby_devices))
 
-        for addr, name in nearby_devices:
-            print("  %s - %s" % (addr, name))
-            if addr == settings.PEER_BT_ADDRESS:
+        service = DiscoveryService()
+        devices = service.discover(2)
+
+        for address, name in devices.items():
+            print("  %s - %s" % (address, name))
+            if address == settings.PEER_BT_ADDRESS:
                 print("PEERING PARTNER FOUND")
-                send_payload(addr)
+                send_payload(address)
 
         time.sleep(settings.BT_SLEEP)
