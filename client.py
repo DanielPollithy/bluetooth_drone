@@ -30,14 +30,15 @@ def send_payload(address):
     sock.close()
 
 
-# while True:
-#     nearby_devices = bluetooth.discover_devices(lookup_names=True)
-#     print("found %d devices" % len(nearby_devices))
-#
-#     for addr, name in nearby_devices:
-#         print("  %s - %s" % (addr, name))
-#         if addr == settings.PEER_BT_ADDRESS:
-#             print("PEERING PARTNER FOUND")
-#             send_payload(addr)
-#
-#     time.sleep(settings.BT_SLEEP)
+if __name__ == '__main__':
+    while True:
+        nearby_devices = bluetooth.discover_devices(lookup_names=True)
+        print("found %d devices" % len(nearby_devices))
+
+        for addr, name in nearby_devices:
+            print("  %s - %s" % (addr, name))
+            if addr == settings.PEER_BT_ADDRESS:
+                print("PEERING PARTNER FOUND")
+                send_payload(addr)
+
+        time.sleep(settings.BT_SLEEP)
