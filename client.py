@@ -6,6 +6,7 @@ import json
 
 import settings
 
+settings.activate_bluetooth_discovery()
 bt_mac = settings.get_own_bt_address()
 print('This devices bluetooth address is: {}'.format(bt_mac))
 

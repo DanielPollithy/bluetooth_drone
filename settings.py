@@ -42,3 +42,8 @@ def get_own_bt_address():
         bt_addresses.append(bt_addr)
 
     return bt_addresses[0]
+
+
+def activate_bluetooth_discovery():
+    p = Popen(['sudo', 'hciconfig', 'hci0', 'piscan'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    p.wait()
