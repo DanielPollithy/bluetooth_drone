@@ -92,8 +92,7 @@ if __name__ == '__main__':
                 try:
                     protocol(address)
                 except bluetooth.btcommon.BluetoothError as e:
-                    code = e[0]
-                    text = e[1]
+                    print(e)
                     if code == 104:
                         print(text)
                         print('That is o.k. I make a break and then we keep on')
