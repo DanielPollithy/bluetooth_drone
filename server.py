@@ -20,7 +20,8 @@ print("Data received: ", str(data))
 
 distance = 0
 try_counter = 0
-btrssi = BluetoothRSSI(addr=address)
+print('Setting up BluetoothRSSI')
+btrssi = BluetoothRSSI(addr=address[0])
 while distance < settings.RSSI_DISTANCE and try_counter < settings.MAX_RSSI_TRY_COUNT:
     try_counter += 1
     distance = btrssi.get_rssi()
