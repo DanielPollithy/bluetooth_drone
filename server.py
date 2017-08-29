@@ -1,5 +1,10 @@
 import bluetooth
 
+import settings
+
+bt_mac = settings.get_own_bt_address()
+print('This devices bluetooth address is: {}'.format(bt_mac))
+
 server_sock = bluetooth.BluetoothSocket(bluetooth.L2CAP)
 
 port = 0x1001

@@ -1,5 +1,6 @@
 # this is the address of the hikey
 # PEER_BT_ADDRESS = '98:7B:F3:19:FE:57'
+PEER_BT_ADDRESS = '7C:E9:D3:DD:66:23'
 BT_SLEEP = 2  # seconds
 
 from subprocess import Popen, PIPE
