@@ -7,7 +7,7 @@ BT_SLEEP = 0.01  # seconds
 DISTANCE_SLEEP = 0.1
 
 RSSI_DISTANCE = 20
-MAX_RSSI_TRY_COUNT = 100
+MAX_RSSI_TRY_COUNT = 10000
 
 from subprocess import Popen, PIPE
 import re
