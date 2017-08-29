@@ -13,8 +13,8 @@ def run(server_sock):
     client_sock, address = server_sock.accept()
 
     # only accept the peer
-    if address[0] != settings.PEER_BT_ADDRESS:
-        print('Not awaited: {}'.format(address[0]))
+    if address[0] != settings.DRONE_BT_ADDRESS:
+        print('Not awaited: {} (awaited)'.format(address[0], settings.DRONE_BT_ADDRESS))
         client_sock.close()
         raise StandardError
 
