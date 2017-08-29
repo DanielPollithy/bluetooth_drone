@@ -12,41 +12,33 @@ port = 0x1001
 server_sock.bind(("", port))
 server_sock.listen(1)
 
-client_sock = False
+client_sock, address = server_sock.accept()
+print("Accepted connection from ", address)
 
-try:
-    client_sock, address = server_sock.accept()
-    print("Accepted connection from ", address)
+data = client_sock.recv(1024)
+print("Data received: ", str(data))
 
-    data = client_sock.recv(1024)
-    print("Data received: ", str(data))
+distance = 0
+try_counter = 0
+btrssi = BluetoothRSSI(addr=address)
+while distance < settings.RSSI_DISTANCE and try_counter < settings.MAX_RSSI_TRY_COUNT:
+    try_counter += 1
+    distance = btrssi.get_rssi()
+    print('Distance to {} at try #{}\trssi={}'.format(address, try_counter, distance))
 
-    distance = 0
-    try_counter = 0
-    btrssi = BluetoothRSSI(addr=address)
-    while distance < settings.RSSI_DISTANCE and try_counter < settings.MAX_RSSI_TRY_COUNT:
-        try_counter += 1
-        distance = btrssi.get_rssi()
-        print('Distance to {} at try #{}\trssi={}'.format(address, try_counter, distance))
-
-    if distance < settings.RSSI_DISTANCE:
-        print('The distance was too big to connect')
-        client_sock.send('Bad distance')
-        client_sock.close()
-        raise KeyboardInterrupt
-
-    # everything is o.k. The drone is close enough, so now we return the proceedings
-    client_sock.send('You are here my friend')
-
-    # receive the last interaction
-    data = client_sock.recv(1024)
-    print("Data received:", str(data))
-
+if distance < settings.RSSI_DISTANCE:
+    print('The distance was too big to connect')
+    client_sock.send('Bad distance')
     client_sock.close()
-except KeyboardInterrupt:
-    print("closing")
-finally:
-    if client_sock:
-        client_sock.close()
-    server_sock.close()
+    raise KeyboardInterrupt
+
+# everything is o.k. The drone is close enough, so now we return the proceedings
+client_sock.send('You are here my friend')
+
+# receive the last interaction
+data = client_sock.recv(1024)
+print("Data received:", str(data))
+
+client_sock.close()
+server_sock.close()
 
