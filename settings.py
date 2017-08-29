@@ -7,6 +7,7 @@ BT_SLEEP = 0.01  # seconds
 DISTANCE_SLEEP = 0.1
 
 CHARGING_TIME = 10
+DRONE_REJECTED_RESTART_TIME = 10
 
 # eth
 CLIENT_ETHEREUM_ADDRESS = '0xde0b2sdsdsddddddddddddddddddddddddddddde'

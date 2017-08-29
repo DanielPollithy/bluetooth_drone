@@ -80,7 +80,8 @@ def protocol(address):
     sock.close()
 
 if __name__ == '__main__':
-    while True:
+    connecting = True
+    while connecting:
         nearby_devices = bluetooth.discover_devices(lookup_names=True)
         print("found %d devices" % len(nearby_devices))
 
@@ -88,6 +89,15 @@ if __name__ == '__main__':
             print("  %s - %s" % (address, name))
             if address == settings.PEER_BT_ADDRESS:
                 print("PEERING PARTNER FOUND")
-                protocol(address)
+                try:
+                    protocol(address)
+                except bluetooth.btcommon.BluetoothError as (code, text):
+                    if code == 104:
+                        print(text)
+                        print('That is o.k. I make a break and then we keep on')
+                        time.sleep(settings.DRONE_REJECTED_RESTART_TIME)
+                    else:
+                        print('This error is not known. I stop connecting')
+                        connecting = False
 
         time.sleep(settings.BT_SLEEP)
