@@ -4,6 +4,7 @@ HIKEY_BT_ADDRESS = '98:7B:F3:19:FE:57'
 RASPY_BT_ADDRESS = 'B8:27:EB:76:09:0B'
 PEER_BT_ADDRESS = HIKEY_BT_ADDRESS
 BT_SLEEP = 0.01  # seconds
+DISTANCE_SLEEP = 0.1
 
 RSSI_DISTANCE = 20
 MAX_RSSI_TRY_COUNT = 100
@@ -29,6 +30,3 @@ def get_own_bt_address():
         bt_addresses.append(bt_addr)
 
     return bt_addresses[0]
-
-
-

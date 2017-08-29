@@ -1,4 +1,5 @@
 import bluetooth
+import time
 from bt_proximity import BluetoothRSSI
 import settings
 
@@ -26,6 +27,7 @@ while distance < settings.RSSI_DISTANCE and try_counter < settings.MAX_RSSI_TRY_
     try_counter += 1
     distance = btrssi.get_rssi()
     print('Distance to {} at try #{}\trssi={}'.format(address, try_counter, distance))
+    time.sleep(settings.DISTANCE_SLEEP)
 
 if distance < settings.RSSI_DISTANCE:
     print('The distance was too big to connect')
