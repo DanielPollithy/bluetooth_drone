@@ -92,13 +92,14 @@ if __name__ == '__main__':
                 try:
                     protocol(address)
                 except bluetooth.btcommon.BluetoothError as e:
-                    code = e.code
-                    if code == 104:
+                    print(dir(e))
+                    if e.__str__() == '(104, )':
                         print('Peer reset the connection')
                         print('That is o.k. I make a break and then we keep on')
                         time.sleep(settings.DRONE_REJECTED_RESTART_TIME)
                     else:
                         print('This error is not known. I stop connecting')
+                        print(e)
                         connecting = False
 
         time.sleep(settings.BT_SLEEP)
