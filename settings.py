@@ -1,7 +1,9 @@
 # this is the address of the hikey
-# PEER_BT_ADDRESS = '98:7B:F3:19:FE:57'
-PEER_BT_ADDRESS = '7C:E9:D3:DD:66:23'
-BT_SLEEP = 2  # seconds
+HIKEY_BT_ADDRESS = '98:7B:F3:19:FE:57'
+# raspy
+RASPY_BT_ADDRESS = 'B8:27:EB:76:09:0B'
+PEER_BT_ADDRESS = RASPY_BT_ADDRESS
+BT_SLEEP = 0.01  # seconds
 
 from subprocess import Popen, PIPE
 import re
@@ -24,4 +26,6 @@ def get_own_bt_address():
         bt_addresses.append(bt_addr)
 
     return bt_addresses[0]
+
+
 

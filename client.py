@@ -10,7 +10,7 @@ print('This devices bluetooth address is: {}'.format(bt_mac))
 
 def send_payload(address):
     payload = json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
-    sock = bluetooth.BluetoothSocket(bluetooth.L2CAP)
+    sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
     bt_addr = address
     port = 0x1001
@@ -26,17 +26,18 @@ def send_payload(address):
     data = sock.recv(1024)
     print("Data received:", str(data))
 
+    a = input("exit: ")
     sock.close()
 
 
-while True:
-    nearby_devices = bluetooth.discover_devices(lookup_names=True)
-    print("found %d devices" % len(nearby_devices))
-
-    for addr, name in nearby_devices:
-        print("  %s - %s" % (addr, name))
-        if addr == settings.PEER_BT_ADDRESS:
-            print("PEERING PARTNER FOUND")
-            send_payload(addr)
-
-    time.sleep(settings.BT_SLEEP)
+# while True:
+#     nearby_devices = bluetooth.discover_devices(lookup_names=True)
+#     print("found %d devices" % len(nearby_devices))
+#
+#     for addr, name in nearby_devices:
+#         print("  %s - %s" % (addr, name))
+#         if addr == settings.PEER_BT_ADDRESS:
+#             print("PEERING PARTNER FOUND")
+#             send_payload(addr)
+#
+#     time.sleep(settings.BT_SLEEP)
