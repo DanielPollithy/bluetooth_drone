@@ -75,11 +75,15 @@ def run(server_sock):
     if start_charging:
         print('START THE CHARGING NOW')
         # wait the charging time
-        time.sleep(settings.CHARGING_TIME)
+        for i in range(10):
+            print('.')
+            time.sleep(settings.CHARGING_TIME/10.0)
+        print('FINISHED charging')
         client_sock.send(json.dumps({'electricity': '10W'}))
     else:
         print('NO electricity wanted')
 
+    print('END: regularly closing the connection')
     client_sock.close()
 
 
@@ -90,13 +94,18 @@ port = 0x1001
 server_sock.bind(("", port))
 server_sock.listen(1)
 
-while True:
+running = True
+
+while running:
     try:
         run(server_sock)
+    except KeyboardInterrupt:
+        print('keyboard interrupt')
+        running = False
     except StandardError:
         print('Received a protocol error')
         print('... Continue the loop')
     except:
-        break
+        running = False
 
 server_sock.close()
