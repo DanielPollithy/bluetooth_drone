@@ -5,6 +5,9 @@ RASPY_BT_ADDRESS = 'B8:27:EB:76:09:0B'
 PEER_BT_ADDRESS = HIKEY_BT_ADDRESS
 BT_SLEEP = 0.01  # seconds
 
+RSSI_DISTANCE = 20
+MAX_RSSI_TRY_COUNT = 100
+
 from subprocess import Popen, PIPE
 import re
 
