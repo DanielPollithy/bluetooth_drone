@@ -30,6 +30,7 @@ def poll_website():
         if booked_station['id'] and booked_station['id'] not in booking_history and \
                 booked_station['station']:
             print('received a new booking')
+            booking_history.append(booked_station['id'])
             # ETHEREUM
             # now end the charging
             if not settings.DEMO:
