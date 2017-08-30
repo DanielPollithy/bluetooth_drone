@@ -3,6 +3,8 @@ import json
 import bluetooth
 import time
 from bt_proximity import BluetoothRSSI
+from subprocess import Popen, PIPE
+
 import settings
 import relais
 
@@ -85,6 +87,31 @@ def run(server_sock):
             time.sleep(settings.CHARGING_TIME/10.0)
         print('closing the relais')
         relais.switch_off()
+
+        # ETHEREUM
+        # now end the charging
+        p = Popen(
+            [
+                'node',
+                'end_charging.js',
+                client_ethereum_address,
+                settings.SERVER_ETHEREUM_ADDRESS,
+                settings.STATION_OWNER_ETH_ADDRESS
+            ],
+            stdin=PIPE,
+            stdout=PIPE,
+            stderr=PIPE
+        )
+        output, err = p.communicate()
+        returncode = p.returncode
+
+        if returncode != 0:
+            print('FATAL ERROR: Could not release the booking from contract.')
+            print('Suicide.')
+            client_sock.close()
+        else:
+            print('Booking ended and station can accept new one.')
+
         print('FINISHED charging')
         client_sock.send(json.dumps({'electricity': '10W'}))
     else:
@@ -92,9 +119,6 @@ def run(server_sock):
 
     print('END: regularly closing the connection')
     client_sock.close()
-
-
-
 
 server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 port = 0x1001
