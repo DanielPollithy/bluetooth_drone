@@ -117,8 +117,8 @@ contract.stopCharging({from: station_owner_eth_address}, (e, r) => {
     chargingStopped.watch(function(error, result){
         console.log(error, result);
         var addr_station = result.args["_station"].toLowerCase();
-        var addr_drone = result.args["_drone"].toLowerCase();
-        if (addr_drone == drone_eth_address && addr_station == station_owner_eth_address) {
+        var addr_station_owner = result.args["_drone"].toLowerCase();
+        if (addr_station_owner == station_owner_eth_address && addr_station == station_eth_address) {
             console.log("This is my booking (correct drone and station)");
             process.exit(0);
         } else {
