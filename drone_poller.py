@@ -32,19 +32,22 @@ def poll_website():
             print('received a new booking')
             # ETHEREUM
             # now end the charging
-            p = Popen(
-                [
-                    'node',
-                    'make_booking.js',
-                    settings.CLIENT_ETHEREUM_ADDRESS,
-                    settings.STATION_OWNER_ETH_ADDRESS
-                ],
-                stdin=PIPE,
-                stdout=PIPE,
-                stderr=PIPE
-            )
-            output, err = p.communicate()
-            returncode = p.returncode
+            if not settings.DEMO:
+                p = Popen(
+                    [
+                        'node',
+                        'make_booking.js',
+                        settings.CLIENT_ETHEREUM_ADDRESS,
+                        settings.STATION_OWNER_ETH_ADDRESS
+                    ],
+                    stdin=PIPE,
+                    stdout=PIPE,
+                    stderr=PIPE
+                )
+                output, err = p.communicate()
+                returncode = p.returncode
+            else:
+                returncode = 0
 
             if returncode == 0:
                 print('Booking was done successfully!')

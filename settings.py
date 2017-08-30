@@ -5,7 +5,7 @@ RASPY_BT_ADDRESS = 'B8:27:EB:76:09:0B'
 
 
 # for demo purpose
-DEMO = False
+DEMO = True
 
 
 

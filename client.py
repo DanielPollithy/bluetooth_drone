@@ -78,19 +78,22 @@ def protocol(address):
 
     # ETHEREUM
     # now start the transaction
-    p = Popen(
-        [
-            'node',
-            'start_charging.js',
-            settings.CLIENT_ETHEREUM_ADDRESS,
-            server_ethereum_address
-        ],
-        stdin=PIPE,
-        stdout=PIPE,
-        stderr=PIPE
-    )
-    output, err = p.communicate()
-    returncode = p.returncode
+    if not settings.DEMO:
+        p = Popen(
+            [
+                'node',
+                'start_charging.js',
+                settings.CLIENT_ETHEREUM_ADDRESS,
+                server_ethereum_address
+            ],
+            stdin=PIPE,
+            stdout=PIPE,
+            stderr=PIPE
+        )
+        output, err = p.communicate()
+        returncode = p.returncode
+    else:
+        returncode = 0
 
     if returncode != 0:
         sock.send(json.dumps({'start_charging': False}))

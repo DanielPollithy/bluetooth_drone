@@ -90,20 +90,23 @@ def run(server_sock):
 
         # ETHEREUM
         # now end the charging
-        p = Popen(
-            [
-                'node',
-                'end_charging.js',
-                client_ethereum_address,
-                settings.SERVER_ETHEREUM_ADDRESS,
-                settings.STATION_OWNER_ETH_ADDRESS
-            ],
-            stdin=PIPE,
-            stdout=PIPE,
-            stderr=PIPE
-        )
-        output, err = p.communicate()
-        returncode = p.returncode
+        if not settings.DEMO:
+            p = Popen(
+                [
+                    'node',
+                    'end_charging.js',
+                    client_ethereum_address,
+                    settings.SERVER_ETHEREUM_ADDRESS,
+                    settings.STATION_OWNER_ETH_ADDRESS
+                ],
+                stdin=PIPE,
+                stdout=PIPE,
+                stderr=PIPE
+            )
+            output, err = p.communicate()
+            returncode = p.returncode
+        else:
+            returncode = 0
 
         if returncode != 0:
             print('FATAL ERROR: Could not release the booking from contract.')
