@@ -59,7 +59,12 @@ def protocol(address):
     # ETHEREUM
     # now start the transaction
     p = Popen(
-        ['node', 'start_charging.js', settings.CLIENT_ETHEREUM_ADDRESS],
+        [
+            'node',
+            'start_charging.js',
+            settings.CLIENT_ETHEREUM_ADDRESS,
+            server_ethereum_address
+        ],
         stdin=PIPE,
         stdout=PIPE,
         stderr=PIPE
@@ -69,7 +74,7 @@ def protocol(address):
 
     if returncode != 0:
         sock.send(json.dumps({'start_charging': False}))
-        print('There was an error in the ethereum start charging logic')
+        print('Not starting charging logic (no reservation or blockchain problem)')
         print('Closing connection.')
         sock.close()
 
