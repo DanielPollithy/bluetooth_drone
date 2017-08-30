@@ -1,0 +1,22 @@
+{
+  "name": "bluetooth_drone",
+  "version": "1.0.0",
+  "description": "The bluetooth api for our raspi drone and the HiKey charging station",
+  "main": "end_charging.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielPollithy/bluetooth_drone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielPollithy/bluetooth_drone/issues"
+  },
+  "homepage": "https://github.com/DanielPollithy/bluetooth_drone#readme",
+  "dependencies": {
+    "web3": "^0.20.1"
+  }
+}
