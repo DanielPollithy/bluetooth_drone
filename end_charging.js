@@ -19,7 +19,7 @@ var settings = require('./settings');
 web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.1.120:8545"));
 console.log('connection established');
 
-web3.personal.unlockAccount(station_owner_eth_address, "123", 150000);
+web3.personal.unlockAccount(station_owner_eth_address, "123", '0x249F0');
 console.log('account unlocked');
 
 var ABI = [{
