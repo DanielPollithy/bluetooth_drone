@@ -59,6 +59,7 @@ def run():
             notify_website()
         except:
             print('[x] Could not notify the website')
+            print("Unexpected error:", sys.exc_info()[0])
 
         try:
             # receive new bookings
@@ -67,7 +68,7 @@ def run():
             print('[x] Could not fetch bookings from the website')
             print("Unexpected error:", sys.exc_info()[0])
 
-            time.sleep(settings.WEBSITE_POLLING_SLEEP)
+        time.sleep(settings.WEBSITE_POLLING_SLEEP)
 
 
 if __name__ == '__main__':
