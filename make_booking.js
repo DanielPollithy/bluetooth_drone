@@ -5,8 +5,8 @@ if (process.argv.length < 4) {
 }
 
 // 1) get commandline argument: Is the drone's ethereum address
-var drone_eth_address = process.argv[2];
-var station_eth_address = process.argv[3];
+var drone_eth_address = process.argv[2].toLowerCase();
+var station_eth_address = process.argv[3].toLowerCase();
 
 
 
@@ -18,10 +18,6 @@ web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.1.120:8545"));
 
 web3.personal.unlockAccount(drone_eth_address, "123", '0x249F0');
 
-
-//'0x772dcb53b59fc61410aa0514bebce8a9bb1e8ed6'
-
-var contractAddress = '0x3f629cee69c94b4e83b3b98ac129022a26ccc478';
 
 var ABI = [{
     "constant": true,
@@ -115,7 +111,7 @@ contract.register({from: drone_eth_address}, (e, r) => {
   var registered = contract.Registered();
     registered.watch(function(error, result){
         console.log(error, result);
-        var addr_drone = result.args["_drone"];
+        var addr_drone = result.args["_drone"].toLowerCase();
         var success = result.args["result"];
         if (addr_drone == drone_eth_address) {
             console.log("This is my booking");

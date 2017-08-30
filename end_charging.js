@@ -6,9 +6,9 @@ if (process.argv.length < 5) {
 }
 
 // 1) get commandline argument: Is the drone's ethereum address
-var drone_eth_address = process.argv[2];
-var station_eth_address = process.argv[3];
-var station_owner_eth_address = process.argv[4];
+var drone_eth_address = process.argv[2].toLowerCase();
+var station_eth_address = process.argv[3].toLowerCase();
+var station_owner_eth_address = process.argv[4].toLowerCase();
 
 
 
@@ -116,8 +116,8 @@ contract.stopCharging({from: station_owner_eth_address}, (e, r) => {
   var chargingStopped = contract.ChargingStopped();
     chargingStopped.watch(function(error, result){
         console.log(error, result);
-        var addr_station = result.args["_station"];
-        var addr_drone = result.args["_drone"];
+        var addr_station = result.args["_station"].toLowerCase();
+        var addr_drone = result.args["_drone"].toLowerCase();
         if (addr_drone == drone_eth_address && addr_station == station_owner_eth_address) {
             console.log("This is my booking (correct drone and station)");
             process.exit(0);
