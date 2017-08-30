@@ -110,7 +110,7 @@ var ABI = [{
 
 var contract = web3.eth.contract(ABI).at(station_eth_address);
 
-contract.register({from: drone_eth_address}, (e, r) => {
+contract.register({from: drone_eth_address, gas: 7000}, (e, r) => {
   console.log(e,r);
   var registered = contract.Registered();
     registered.watch(function(error, result){
