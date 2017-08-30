@@ -1,28 +1,14 @@
-
-// 2) interact with the startCharging contract function
-// 3) wait for the Start charging event
-// 4) Return 0 if booking is o.k., return 1 if not
-
-// 1) get commandline arguments:
-//     - the drone's ethereum address,
-//     - the station's eth address,
-//     - the start of the timeslot in seconds (unix time)
-// 2) interact with the booking function of the station's contract
-// 3) wait for the new booking event
-// 4) Return 0 if booking is o.k., return 1 if not
-
 var process = require('process');
 
-if (process.argv.length < 5) {
+if (process.argv.length < 4) {
     return 1;
 }
 
 // 1) get commandline argument: Is the drone's ethereum address
 var drone_eth_address = process.argv[2];
 var station_eth_address = process.argv[3];
-var timeslot_start = process.argv[4];
 
-console.log(drone_eth_address, station_eth_address, timeslot_start);
+
 
 var Web3 = require('web3');
 
@@ -30,83 +16,107 @@ var settings = require('./settings');
 
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
-web3.personal.unlockAccount(web3.eth.accounts[2], "123", 150000);
-
-
-//'0x772dcb53b59fc61410aa0514bebce8a9bb1e8ed6'
-
-var contractAddress = '0x3f629cee69c94b4e83b3b98ac129022a26ccc478';
+web3.personal.unlockAccount(drone_eth_address, "123", 150000);
 
 var ABI = [{
-    "constant": false,
-    "inputs": [],
-    "name": "addDrone",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-}, {
     "constant": true,
     "inputs": [],
-    "name": "getKeys",
-    "outputs": [{
-        "name": "",
-        "type": "address[]"
-    }],
+    "name": "chargingPrice",
+    "outputs": [{"name": "", "type": "uint256"}],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
 }, {
-    "constant": true,
-    "inputs": [{
-        "name": "",
-        "type": "address"
-    }],
+    "constant": false,
+    "inputs": [],
     "name": "register",
-    "outputs": [{
-        "name": "",
-        "type": "uint256"
-    }],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-}, {
-    "constant": false,
-    "inputs": [],
-    "name": "removeDrone",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
 }, {
+    "constant": false,
     "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "constructor"
+    "type": "function"
 }, {
+    "constant": false,
+    "inputs": [],
+    "name": "stopCharging",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "constant": false,
+    "inputs": [{"name": "_chargingPrice", "type": "uint256"}],
+    "name": "setChargingPrice",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "constant": false,
+    "inputs": [],
+    "name": "startCharging",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+}, {
+    "constant": true,
+    "inputs": [{"name": "", "type": "address"}],
+    "name": "refund",
+    "outputs": [{"name": "", "type": "uint256"}],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+}, {"inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor"}, {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [{"indexed": false, "name": "_drone", "type": "address"}, {
         "indexed": false,
-        "name": "",
-        "type": "address"
+        "name": "result",
+        "type": "bool"
     }],
-    "name": "DroneAdded",
+    "name": "Registered",
     "type": "event"
 }, {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [{"indexed": false, "name": "_station", "type": "address"}, {
         "indexed": false,
-        "name": "",
+        "name": "_drone",
         "type": "address"
     }],
-    "name": "DroneRemoved",
+    "name": "ChargingStarts",
+    "type": "event"
+}, {
+    "anonymous": false,
+    "inputs": [{"indexed": false, "name": "_station", "type": "address"}, {
+        "indexed": false,
+        "name": "_drone",
+        "type": "address"
+    }],
+    "name": "ChargingStopped",
     "type": "event"
 }];
 
-var drs = web3.eth.contract(ABI).at(contractAddress);
+var contract = web3.eth.contract(ABI).at(station_eth_address);
 
-drs.addDrone({from: web3.eth.accounts[2]}, (e, r) => {
-  console.log(e,r)
+contract.startCharging({from: drone_eth_address}, (e, r) => {
+  console.log(e,r);
+  var chargingStarts = contract.ChargingStarts();
+    chargingStarts.watch(function(error, result){
+        console.log(error, result);
+        var addr_station = result.args["_station"];
+        var addr_drone = result.args["_drone"];
+        if (addr_drone == drone_eth_address && addr_station == station_eth_address) {
+            console.log("This is my booking (correct drone and station)");
+            process.exit(0);
+        } else {
+            console.log("NOT my booking");
+        }
+    });
 });
-
-
