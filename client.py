@@ -4,6 +4,8 @@ import bluetooth
 import time
 import json
 
+from subprocess import Popen, PIPE
+
 import settings
 
 settings.activate_bluetooth_discovery()
@@ -12,7 +14,7 @@ print('This devices bluetooth address is: {}'.format(bt_mac))
 
 
 def protocol(address):
-    payload = json.dumps({'addr': '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae'})
+    payload = json.dumps({'addr': settings.CLIENT_ETHEREUM_ADDRESS})
     assert len(payload) < 1024
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
@@ -54,8 +56,23 @@ def protocol(address):
         print('Closing connection.')
         sock.close()
 
-    # do some ethereum logic here with
-    # server_ethereum_address
+    # ETHEREUM
+    # now start the transaction
+    p = Popen(
+        ['node', 'start_charging.js', settings.CLIENT_ETHEREUM_ADDRESS],
+        stdin=PIPE,
+        stdout=PIPE,
+        stderr=PIPE
+    )
+    output, err = p.communicate()
+    returncode = p.returncode
+
+    if returncode != 0:
+        sock.send(json.dumps({'start_charging': False}))
+        print('There was an error in the ethereum start charging logic')
+        print('Closing connection.')
+        sock.close()
+
     sock.send(json.dumps({'start_charging': True}))
 
     # the server will activate the relais now

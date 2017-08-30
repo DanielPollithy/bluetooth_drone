@@ -4,6 +4,12 @@ HIKEY_BT_ADDRESS = '98:7B:F3:19:FE:57'
 RASPY_BT_ADDRESS = 'B8:27:EB:76:09:0B'
 
 
+# for demo purpose
+DEMO = False
+
+
+WEBSITE_POLLING_SLEEP = 1  # seconds
+
 BT_SLEEP = 0.01  # seconds
 DISTANCE_SLEEP = 0.1
 
@@ -15,8 +21,11 @@ CHARGING_TIME = 10
 DRONE_REJECTED_RESTART_TIME = 10
 
 # eth
-CLIENT_ETHEREUM_ADDRESS = '0xde0b2sdsdsddddddddddddddddddddddddddddde'
-SERVER_ETHEREUM_ADDRESS = '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae'
+# this is the drone
+CLIENT_ETHEREUM_ADDRESS = '0x772dcb53b59fc61410aa0514bebce8a9bb1e8ed6'
+
+# this is the station contract
+SERVER_ETHEREUM_ADDRESS = '0xc35719829b3a08211f181e22a3d93d79f4fa3ab9'
 
 RSSI_DISTANCE = 20
 MAX_RSSI_TRY_COUNT = 10000

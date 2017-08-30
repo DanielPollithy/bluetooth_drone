@@ -88,7 +88,7 @@ def run(server_sock):
         print('FINISHED charging')
         client_sock.send(json.dumps({'electricity': '10W'}))
     else:
-        print('NO electricity wanted')
+        print('NO electricity wanted or blockchain problem')
 
     print('END: regularly closing the connection')
     client_sock.close()
