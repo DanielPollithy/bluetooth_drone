@@ -1,6 +1,7 @@
 var process = require('process');
 
 if (process.argv.length < 5) {
+    console.log('not enough params')
     return 1;
 }
 
@@ -16,8 +17,10 @@ var Web3 = require('web3');
 var settings = require('./settings');
 
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+console.log('connection established');
 
 web3.personal.unlockAccount(station_owner_eth_address, "123", 150000);
+console.log('account unlocked');
 
 var ABI = [{
     "constant": true,
@@ -105,8 +108,10 @@ var ABI = [{
 }];
 
 var contract = web3.eth.contract(ABI).at(station_eth_address);
+console.log('contract abi is here');
 
 contract.stopCharging({from: station_owner_eth_address}, (e, r) => {
+    console.log('request for block');
   console.log(e,r);
   var chargingStopped = contract.ChargingStopped();
     chargingStopped.watch(function(error, result){
