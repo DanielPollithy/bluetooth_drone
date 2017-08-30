@@ -5,6 +5,8 @@ import urllib2
 
 from subprocess import Popen, PIPE
 
+import sys
+
 import settings
 
 # array of booking numbers
@@ -13,9 +15,7 @@ booking_history = []
 
 def notify_website():
     with open('connection_state.txt', 'r') as inp:
-        data = {
-            'state': json.loads(inp.read())
-        }
+        data = json.loads(inp.read())
 
     req = urllib2.Request(settings.WEBSITE_STATUS_URL)
     req.add_header('Content-Type', 'application/json')
@@ -63,10 +63,11 @@ def run():
         try:
             # receive new bookings
             poll_website()
-        except:
+        except :
             print('[x] Could not fetch bookings from the website')
+            print("Unexpected error:", sys.exc_info()[0])
 
-        time.sleep(settings.WEBSITE_POLLING_SLEEP)
+            time.sleep(settings.WEBSITE_POLLING_SLEEP)
 
 
 if __name__ == '__main__':
