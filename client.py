@@ -29,7 +29,7 @@ def protocol(address):
     print("connected.  Sending: ", payload)
     sock.send(payload)
 
-    with open('connection_state.txt', 'r') as inp:
+    with open('connection_state.txt', 'w') as inp:
         inp.write(json.dumps({
             'state': 'landing approach',
             'station': ''
@@ -48,17 +48,17 @@ def protocol(address):
         if connection_accepted:
             assert 'addr' in data
             server_ethereum_address = data['addr']
-            with open('connection_state.txt', 'r') as inp:
+            with open('connection_state.txt', 'w') as inp:
                 inp.write(json.dumps({
-                    'state': 'landing accepted',
+                    'status': 'landing accepted',
                     'station': server_ethereum_address
                 }))
             notify_website()
         else:
             server_ethereum_address = False
-            with open('connection_state.txt', 'r') as inp:
+            with open('connection_state.txt', 'w') as inp:
                 inp.write(json.dumps({
-                    'state': 'landing denied',
+                    'status': 'landing denied',
                     'station': ''
                 }))
             notify_website()
@@ -96,17 +96,17 @@ def protocol(address):
         sock.send(json.dumps({'start_charging': False}))
         print('Not starting charging logic (no reservation or blockchain problem)')
         print('Closing connection.')
-        with open('connection_state.txt', 'r') as inp:
+        with open('connection_state.txt', 'w') as inp:
             inp.write(json.dumps({
-                'state': 'charging denied',
+                'status': 'charging denied',
                 'station': server_ethereum_address
             }))
         notify_website()
         sock.close()
 
-    with open('connection_state.txt', 'r') as inp:
+    with open('connection_state.txt', 'w') as inp:
         inp.write(json.dumps({
-            'state': 'start charging',
+            'status': 'start charging',
             'station': server_ethereum_address
         }))
     notify_website()
@@ -132,9 +132,9 @@ def protocol(address):
     print('Energy consumption as hangar says: {}'.format(electricity))
     print('Transaction done.')
 
-    with open('connection_state.txt', 'r') as inp:
+    with open('connection_state.txt', 'w') as inp:
         inp.write(json.dumps({
-            'state': 'charging ended',
+            'status': 'charging ended',
             'station': server_ethereum_address
         }))
     notify_website()
