@@ -102,7 +102,7 @@ def protocol(address):
 
     sock.close()
 
-if __name__ == '__main__':
+def run():
     connecting = True
     while connecting:
         nearby_devices = bluetooth.discover_devices(lookup_names=True)
@@ -125,3 +125,7 @@ if __name__ == '__main__':
                         connecting = False
 
         time.sleep(settings.BT_SLEEP)
+
+
+if __name__ == '__main__':
+    run()

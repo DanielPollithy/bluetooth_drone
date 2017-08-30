@@ -8,7 +8,7 @@ RASPY_BT_ADDRESS = 'B8:27:EB:76:09:0B'
 DEMO = False
 
 
-WEBSITE_POLLING_SLEEP = 1  # seconds
+WEBSITE_POLLING_SLEEP = 5  # seconds
 
 BT_SLEEP = 0.01  # seconds
 DISTANCE_SLEEP = 0.1
