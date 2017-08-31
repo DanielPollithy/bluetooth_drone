@@ -37,7 +37,7 @@ WEBSITE_STATUS_URL =  'http://iotwist.com:8200/api/drone/status/{}'.format(CLIEN
 
 # client
 BT_DISCOVERY_DURATION = 3
-RSSI_DISTANCE = 20
+RSSI_DISTANCE = 1
 MAX_RSSI_TRY_COUNT = 1000
 
 from subprocess import Popen, PIPE
