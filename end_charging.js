@@ -17,7 +17,7 @@ var settings = require('./settings');
 
 web3 = new Web3(new Web3.providers.HttpProvider(settings.node_url));
 
-web3.personal.unlockAccount(drone_eth_address, "123", '0x249F0');
+web3.personal.unlockAccount(station_owner_eth_address, "123", '0x249F0');
 
 var contract = web3.eth.contract(settings.ABI).at(station_eth_address);
 
