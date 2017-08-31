@@ -1,8 +1,10 @@
 [Unit]
 Description=Station Client Service
+After=multi-user.target
 
 [Service]
-ExecStart=/bin/bash/ -c "/usr/bin/python /home/linaro/bluetooth_drone/server.py"
+Type=idle
+ExecStart=/usr/bin/python /home/linaro/bluetooth_drone/server.py
 Restart=on-failure
 
 [Install]

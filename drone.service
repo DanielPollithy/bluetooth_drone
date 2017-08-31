@@ -1,8 +1,10 @@
 [Unit]
 Description=Drone Client Service
+After=multi-user.target
 
 [Service]
-ExecStart=/bin/bash/ -c "/usr/bin/python /home/pi/bluetooth_drone/drone.py"
+Type=idle
+ExecStart=/usr/bin/python /home/pi/bluetooth_drone/drone.py
 Restart=on-failure
 
 [Install]
