@@ -183,10 +183,13 @@ def run():
                     elif e.message == "(9, 'Bad file descriptor')":
                         print('Closing connection because booking is unconfirmed')
                         print('No booking in blockchain')
+                    elif e.message == "(104, 'Connection reset by peer')":
+                        print('Peer closed connection')
+                        print('No booking in blockchain')
                     else:
                         print('This error is not known. I stop connecting')
                         print(e)
-                        connecting = False
+                        # connecting = False
 
         time.sleep(settings.BT_SLEEP)
 
