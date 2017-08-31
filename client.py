@@ -149,6 +149,8 @@ def run():
     while connecting:
         nearby_devices = bluetooth.discover_devices(duration=1, flush_cache=False)
         print("found %d devices" % len(nearby_devices))
+        print(nearby_devices)
+        print(nearby_devices.items())
 
         for address, name in nearby_devices:
             print("  %s - %s" % (address, name))
