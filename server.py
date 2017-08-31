@@ -2,6 +2,8 @@ import json
 
 import bluetooth
 import time
+
+import sys
 from bt_proximity import BluetoothRSSI
 from subprocess import Popen, PIPE
 
@@ -138,6 +140,7 @@ while running:
         running = False
     except StandardError:
         print('Received a protocol error')
+        print("Unexpected error:", sys.exc_info()[0])
         print('... Continue the loop')
     except:
         running = False
