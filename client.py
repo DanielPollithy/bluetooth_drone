@@ -156,7 +156,7 @@ def run():
                 print("PEERING PARTNER FOUND")
                 try:
                     protocol(address.lower())
-                except bluetooth.btcommon.BluetoothError as e:
+                except bluetooth.BluetoothError as e:
                     print('e')
                     print(e)
                     print('errno')
