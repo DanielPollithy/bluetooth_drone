@@ -1,0 +1,9 @@
+[Unit]
+Description=Drone Client Service
+
+[Service]
+ExecStart=/usr/bin/python /home/pi/bluetooth_drone/drone.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
