@@ -20,18 +20,20 @@ web3.personal.unlockAccount(drone_eth_address, "123", '0x249F0');
 
 var contract = web3.eth.contract(settings.ABI).at(station_eth_address);
 
+setTimeout(function () {
+    process.exit(1);
+}, 7000);
+
 contract.startCharging({from: drone_eth_address}, (e, r) => {
   console.log(e,r);
   var chargingStarts = contract.ChargingStarts();
     chargingStarts.watch(function(error, result){
-        console.log(error, result);
         var addr_station = result.args["_station"].toLowerCase();
         var addr_drone = result.args["_drone"].toLowerCase();
         if (addr_drone == drone_eth_address && addr_station == station_eth_address) {
-            console.log("This is my booking (correct drone and station)");
+            console.log("OK");
             process.exit(0);
         } else {
-            console.log("NOT my booking");
         }
     });
 });
