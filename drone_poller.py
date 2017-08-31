@@ -59,24 +59,20 @@ def poll_website():
 def run():
     while True:
         try:
-            try:
-                # send my own data
-                notify_website()
-            except:
-                print('[x] Could not notify the website')
-                print("Unexpected error:", sys.exc_info()[0])
+            # send my own data
+            notify_website()
+        except:
+            print('[x] Could not notify the website')
+            print("Unexpected error:", sys.exc_info()[0])
 
-            try:
-                # receive new bookings
-                poll_website()
-            except :
-                print('[x] Could not fetch bookings from the website')
-                print("Unexpected error:", sys.exc_info()[0])
+        try:
+            # receive new bookings
+            poll_website()
+        except :
+            print('[x] Could not fetch bookings from the website')
+            print("Unexpected error:", sys.exc_info()[0])
 
-            time.sleep(settings.WEBSITE_POLLING_SLEEP)
-        except KeyboardInterrupt:
-            print('Program execution stopped by user')
-            exit()
+        time.sleep(settings.WEBSITE_POLLING_SLEEP)
 
 
 if __name__ == '__main__':

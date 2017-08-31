@@ -7,6 +7,7 @@ def run():
     p = Process(target=drone_poller.run)
     p.start()
     client.run()
+    p.join()
 
 
 if __name__ == '__main__':
