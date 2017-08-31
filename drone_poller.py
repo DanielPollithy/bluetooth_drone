@@ -42,7 +42,7 @@ def poll_website():
                         'node',
                         'make_booking.js',
                         settings.CLIENT_ETHEREUM_ADDRESS,
-                        settings.STATION_OWNER_ETH_ADDRESS
+                        settings.SERVER_ETHEREUM_ADDRESS
                     ],
                     stdin=PIPE,
                     stdout=PIPE,
