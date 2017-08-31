@@ -82,6 +82,7 @@ def protocol(address):
     # ETHEREUM
     # now start the transaction
     if not settings.DEMO:
+        print('node start_charging.js {} {}'.format(settings.CLIENT_ETHEREUM_ADDRESS, server_ethereum_address))
         p = Popen(
             [
                 'node',
