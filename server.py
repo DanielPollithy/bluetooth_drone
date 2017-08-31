@@ -4,15 +4,17 @@ import bluetooth
 import time
 
 import sys
-from bt_proximity import BluetoothRSSI
+from bt_rssi2 import BluetoothRSSI
 from subprocess import Popen, PIPE
 
 import settings
 import relais
 
 
-settings.activate_bluetooth_discovery()
-bt_mac = settings.get_own_bt_address()
+settings.activate_bluetooth_discovery('hci1')
+#bt_mac = settings.get_own_bt_address()
+# hack
+bt_mac = settings.HIKEY_BT_ADDRESS
 print('This devices bluetooth address is: {}'.format(bt_mac))
 
 
@@ -45,7 +47,7 @@ def run(server_sock):
     distance = 0
     try_counter = 0
     print('Setting up BluetoothRSSI')
-    btrssi = BluetoothRSSI(addr=address[0])
+    btrssi = BluetoothRSSI(addr=address[0], dev_id=1)
     while distance < settings.RSSI_DISTANCE and try_counter < settings.MAX_RSSI_TRY_COUNT:
         try_counter += 1
         distance = btrssi.get_rssi()
