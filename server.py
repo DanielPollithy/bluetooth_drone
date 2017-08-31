@@ -125,6 +125,8 @@ def run(server_sock):
     print('END: regularly closing the connection')
     client_sock.close()
 
+relais.switch_off()
+
 server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 port = 0x1001
 server_sock.bind(("", port))
