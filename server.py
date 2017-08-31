@@ -55,13 +55,13 @@ def run(server_sock):
             print('Distance to {} at try #{}\trssi={}'.format(address, try_counter, distance))
         time.sleep(settings.DISTANCE_SLEEP)
 
-    print('Distance OK')
-
     if distance < settings.RSSI_DISTANCE:
         print('The distance was too big to connect')
         client_sock.send(json.dumps({'accepted': False}))
         client_sock.close()
         raise StandardError
+
+    print('Distance OK')
 
     # everything is o.k. The drone is close enough, so now we return the proceedings
     payload = json.dumps({'accepted': True, 'addr': settings.SERVER_ETHEREUM_ADDRESS})

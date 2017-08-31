@@ -76,6 +76,9 @@ def protocol(address):
         print('Closing connection.')
         sock.close()
 
+    print('Connection accepted')
+    print('calling ethereum network')
+
     # ETHEREUM
     # now start the transaction
     if not settings.DEMO:
