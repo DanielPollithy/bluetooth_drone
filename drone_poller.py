@@ -28,6 +28,7 @@ def notify_website():
 def poll_website():
     response = urllib.urlopen(settings.WEBSITE_POLLING_URL)
     data = json.loads(response.read())
+    print('poll_website')
     print(data)
     for booked_station in data:
         if booked_station['id'] and booked_station['id'] not in booking_history and \
