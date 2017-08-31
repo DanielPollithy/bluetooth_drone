@@ -92,7 +92,8 @@ def protocol(address):
             ],
             stdin=PIPE,
             stdout=PIPE,
-            stderr=PIPE
+            stderr=PIPE,
+            timeout=settings.ETHEREUM_TIMEOUT
         )
         output, err = p.communicate()
         returncode = p.returncode
@@ -109,7 +110,9 @@ def protocol(address):
                 'station': server_ethereum_address
             }))
         notify_website()
-        sock.close()
+        # wait for remote closing
+        data = sock.recv(1024)
+        # sock.close()
 
     with open('connection_state.txt', 'w') as inp:
         inp.write(json.dumps({
