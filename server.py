@@ -125,26 +125,30 @@ def run(server_sock):
     print('END: regularly closing the connection')
     client_sock.close()
 
-relais.switch_off()
 
-server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-port = 0x1001
-server_sock.bind(("", port))
-server_sock.listen(1)
+def bluetooth_routine():
+    server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    port = 0x1001
+    server_sock.bind(("", port))
+    server_sock.listen(1)
+    run(server_sock)
+    server_sock.close()
 
-running = True
 
-while running:
+def run_server():
     try:
-        run(server_sock)
+        while True:
+            bluetooth_routine()
     except KeyboardInterrupt:
         print('keyboard interrupt')
-        running = False
-    # except StandardError:
-    #     print('Received a protocol error')
-    #     print("Unexpected error:", sys.exc_info()[0])
-    #     print('... Continue the loop')
-    # except:
-    #     running = False
 
-server_sock.close()
+
+if __name__ == '__main__':
+    relais.switch_off()
+    run_server()
+
+
+
+
+
+
