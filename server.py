@@ -138,11 +138,11 @@ while running:
     except KeyboardInterrupt:
         print('keyboard interrupt')
         running = False
-    except StandardError:
-        print('Received a protocol error')
-        print("Unexpected error:", sys.exc_info()[0])
-        print('... Continue the loop')
-    except:
-        running = False
+    # except StandardError:
+    #     print('Received a protocol error')
+    #     print("Unexpected error:", sys.exc_info()[0])
+    #     print('... Continue the loop')
+    # except:
+    #     running = False
 
 server_sock.close()
