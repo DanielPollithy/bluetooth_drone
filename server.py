@@ -131,8 +131,10 @@ def bluetooth_routine():
     port = 0x1001
     server_sock.bind(("", port))
     server_sock.listen(1)
+    print('Bluetooth server listening')
     run(server_sock)
     server_sock.close()
+    time.sleep(1)
 
 
 def run_server():
