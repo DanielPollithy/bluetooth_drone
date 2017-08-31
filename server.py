@@ -51,8 +51,11 @@ def run(server_sock):
     while distance < settings.RSSI_DISTANCE and try_counter < settings.MAX_RSSI_TRY_COUNT:
         try_counter += 1
         distance = btrssi.get_rssi()
-        print('Distance to {} at try #{}\trssi={}'.format(address, try_counter, distance))
+        if try_counter % 10 == 0:
+            print('Distance to {} at try #{}\trssi={}'.format(address, try_counter, distance))
         time.sleep(settings.DISTANCE_SLEEP)
+
+    print('Distance OK')
 
     if distance < settings.RSSI_DISTANCE:
         print('The distance was too big to connect')
