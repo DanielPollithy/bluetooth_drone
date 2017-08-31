@@ -174,6 +174,9 @@ def run():
                     elif e.message == "(112, 'Host is down')":
                         print('The host is down. :(')
                         print('Try to reconnect')
+                    elif e.message == "(9, 'Bad file descriptor')":
+                        print('Closing connection because booking is unconfirmed')
+                        print('No booking in blockchain')
                     else:
                         print('This error is not known. I stop connecting')
                         print(e)
