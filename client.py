@@ -171,7 +171,7 @@ def run():
                         print('Connection reset by peer')
                         print('That is o.k. I make a break and then we keep on')
                         time.sleep(settings.DRONE_REJECTED_RESTART_TIME)
-                    elif e.msg == "(112, 'Host is down')":
+                    elif e.message == "(112, 'Host is down')":
                         print('The host is down. :(')
                         print('Try to reconnect')
                     else:
