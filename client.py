@@ -157,7 +157,17 @@ def run():
                 try:
                     protocol(address.lower())
                 except bluetooth.btcommon.BluetoothError as e:
-                    if e.__str__() == "(104, 'Connection reset by peer')":
+                    print('e')
+                    print(e)
+                    print('errno')
+                    print(e.errno)
+                    print('args')
+                    print(e.args)
+                    print('msg')
+                    print(e.message)
+                    print('__repr__()')
+                    print(e.__repr__())
+                    if e.__repr__() == "(104, 'Connection reset by peer')":
                         print('Connection reset by peer')
                         print('That is o.k. I make a break and then we keep on')
                         time.sleep(settings.DRONE_REJECTED_RESTART_TIME)
