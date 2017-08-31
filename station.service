@@ -2,7 +2,7 @@
 Description=Station Client Service
 
 [Service]
-ExecStart=sleep 5 && /usr/bin/python /home/linaro/bluetooth_drone/server.py
+ExecStart=/bin/bash/ -c "/usr/bin/python /home/linaro/bluetooth_drone/server.py"
 Restart=on-failure
 
 [Install]
