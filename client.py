@@ -147,11 +147,11 @@ def protocol(address):
 def run():
     connecting = True
     while connecting:
-        nearby_devices = bluetooth.discover_devices(lookup_names=True)
+        nearby_devices = bluetooth.discover_devices(duration=1, flush_cache=False)
         print("found %d devices" % len(nearby_devices))
 
-        for address, name in nearby_devices:
-            print("  %s - %s" % (address, name))
+        for address in nearby_devices:
+            print("  %s " % (address))
             if address.lower() == settings.PEER_BT_ADDRESS:
                 print("PEERING PARTNER FOUND")
                 try:
