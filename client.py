@@ -47,7 +47,7 @@ def protocol(address):
         connection_accepted = data['accepted']
         if connection_accepted:
             assert 'addr' in data
-            server_ethereum_address = data['addr']
+            server_ethereum_address = data['addr'].lower()
             with open('connection_state.txt', 'w') as inp:
                 inp.write(json.dumps({
                     'status': 'landing accepted',
@@ -152,10 +152,10 @@ def run():
 
         for address, name in nearby_devices:
             print("  %s - %s" % (address, name))
-            if address == settings.PEER_BT_ADDRESS:
+            if address.lower() == settings.PEER_BT_ADDRESS:
                 print("PEERING PARTNER FOUND")
                 try:
-                    protocol(address)
+                    protocol(address.lower())
                 except bluetooth.btcommon.BluetoothError as e:
                     if e.__str__() == "(104, 'Connection reset by peer')":
                         print('Connection reset by peer')

@@ -20,8 +20,8 @@ def run(server_sock):
     client_sock, address = server_sock.accept()
 
     # only accept the peer
-    if address[0] != settings.DRONE_BT_ADDRESS:
-        print('Not awaited: {} (awaited)'.format(address[0], settings.DRONE_BT_ADDRESS))
+    if address[0].lower() != settings.DRONE_BT_ADDRESS:
+        print('Not awaited: {} (awaited)'.format(address[0].lower(), settings.DRONE_BT_ADDRESS))
         client_sock.close()
         raise StandardError
 
@@ -32,7 +32,7 @@ def run(server_sock):
     try:
         data = json.loads(data)
         assert 'addr' in data
-        client_ethereum_address = data['addr']
+        client_ethereum_address = data['addr'].lower()
     except AssertionError:
         print('Json is missing data')
         client_sock.close()
@@ -45,7 +45,7 @@ def run(server_sock):
     distance = 0
     try_counter = 0
     print('Setting up BluetoothRSSI')
-    btrssi = BluetoothRSSI(addr=address[0])
+    btrssi = BluetoothRSSI(addr=address[0].lower())
     while distance < settings.RSSI_DISTANCE and try_counter < settings.MAX_RSSI_TRY_COUNT:
         try_counter += 1
         distance = btrssi.get_rssi()

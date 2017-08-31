@@ -1,9 +1,9 @@
 # this is the address of the hikey
-HIKEY_BT_ADDRESS = '98:7B:F3:19:FE:57'
-HIKEY_IP_ADDRESS = '192.168.1.139'
+HIKEY_BT_ADDRESS = '98:7B:F3:19:FE:57'.lower()
+HIKEY_IP_ADDRESS = '192.168.1.139'.lower()
 # raspy
-RASPY_BT_ADDRESS = 'B8:27:EB:B5:3E:D1'
-RASPY_IP_ADDRESS = '192.168.1.106'
+RASPY_BT_ADDRESS = 'B8:27:EB:1F:94:78'.lower()
+RASPY_IP_ADDRESS = '192.168.1.106'.lower()
 
 
 # for demo purpose
