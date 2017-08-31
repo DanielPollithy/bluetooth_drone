@@ -4,15 +4,17 @@ import bluetooth
 import time
 
 import sys
-from bt_proximity import BluetoothRSSI
+from bt_rssi2 import BluetoothRSSI
 from subprocess import Popen, PIPE
 
 import settings
 import relais
 
 
-settings.activate_bluetooth_discovery()
-bt_mac = settings.get_own_bt_address()
+settings.activate_bluetooth_discovery('hci1')
+#bt_mac = settings.get_own_bt_address()
+# hack
+bt_mac = settings.HIKEY_BT_ADDRESS
 print('This devices bluetooth address is: {}'.format(bt_mac))
 
 
@@ -45,7 +47,7 @@ def run(server_sock):
     distance = 0
     try_counter = 0
     print('Setting up BluetoothRSSI')
-    btrssi = BluetoothRSSI(addr=address[0])
+    btrssi = BluetoothRSSI(addr=address[0], dev_id=1)
     while distance < settings.RSSI_DISTANCE and try_counter < settings.MAX_RSSI_TRY_COUNT:
         try_counter += 1
         distance = btrssi.get_rssi()
@@ -125,26 +127,32 @@ def run(server_sock):
     print('END: regularly closing the connection')
     client_sock.close()
 
-relais.switch_off()
 
-server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-port = 0x1001
-server_sock.bind(("", port))
-server_sock.listen(1)
+def bluetooth_routine():
+    server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    port = 0x1001
+    server_sock.bind(("", port))
+    server_sock.listen(1)
+    print('Bluetooth server listening')
+    run(server_sock)
+    server_sock.close()
+    time.sleep(1)
 
-running = True
 
-while running:
+def run_server():
     try:
-        run(server_sock)
+        while True:
+            bluetooth_routine()
     except KeyboardInterrupt:
         print('keyboard interrupt')
-        running = False
-    # except StandardError:
-    #     print('Received a protocol error')
-    #     print("Unexpected error:", sys.exc_info()[0])
-    #     print('... Continue the loop')
-    # except:
-    #     running = False
 
-server_sock.close()
+
+if __name__ == '__main__':
+    relais.switch_off()
+    run_server()
+
+
+
+
+
+

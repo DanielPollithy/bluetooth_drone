@@ -1,5 +1,8 @@
 # this is the address of the hikey
-HIKEY_BT_ADDRESS = '98:7B:F3:19:FE:57'.lower()
+# internal
+# HIKEY_BT_ADDRESS = '98:7B:F3:19:FE:57'.lower()
+# dongle
+HIKEY_BT_ADDRESS = '00:1A:7D:DA:71:13'.lower()
 HIKEY_IP_ADDRESS = '192.168.1.139'.lower()
 # raspy
 RASPY_BT_ADDRESS = 'B8:27:EB:1F:94:78'.lower()
@@ -33,7 +36,7 @@ WEBSITE_POLLING_URL = 'http://iotwist.com:8200/api/drone/bookings/{}'.format(CLI
 WEBSITE_STATUS_URL =  'http://iotwist.com:8200/api/drone/status/{}'.format(CLIENT_ETHEREUM_ADDRESS)
 
 RSSI_DISTANCE = 10
-MAX_RSSI_TRY_COUNT = 10000
+MAX_RSSI_TRY_COUNT = 1000
 
 from subprocess import Popen, PIPE
 import re
@@ -58,6 +61,6 @@ def get_own_bt_address():
     return bt_addresses[0]
 
 
-def activate_bluetooth_discovery():
-    p = Popen(['sudo', 'hciconfig', 'hci0', 'piscan'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+def activate_bluetooth_discovery(device='hci0'):
+    p = Popen(['sudo', 'hciconfig', device, 'piscan'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     p.wait()

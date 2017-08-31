@@ -147,7 +147,7 @@ def protocol(address):
 def run():
     connecting = True
     while connecting:
-        nearby_devices = bluetooth.discover_devices(duration=1, flush_cache=False)
+        nearby_devices = bluetooth.discover_devices(duration=8, flush_cache=False)
         print("found %d devices" % len(nearby_devices))
 
         for address in nearby_devices:
@@ -156,11 +156,24 @@ def run():
                 print("PEERING PARTNER FOUND")
                 try:
                     protocol(address.lower())
-                except bluetooth.btcommon.BluetoothError as e:
-                    if e.__str__() == "(104, 'Connection reset by peer')":
+                except bluetooth.BluetoothError as e:
+                    print('e')
+                    print(e)
+                    print('errno')
+                    print(e.errno)
+                    print('args')
+                    print(e.args)
+                    print('msg')
+                    print(e.message)
+                    print('__repr__()')
+                    print(e.__repr__())
+                    if e.__repr__() == "(104, 'Connection reset by peer')":
                         print('Connection reset by peer')
                         print('That is o.k. I make a break and then we keep on')
                         time.sleep(settings.DRONE_REJECTED_RESTART_TIME)
+                    elif e.message == "(112, 'Host is down')":
+                        print('The host is down. :(')
+                        print('Try to reconnect')
                     else:
                         print('This error is not known. I stop connecting')
                         print(e)
