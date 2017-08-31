@@ -14,12 +14,15 @@ booking_history = []
 
 
 def notify_website():
-    with open('connection_state.txt', 'r') as inp:
-        data = json.loads(inp.read())
+    try:
+        with open('connection_state.txt', 'r') as inp:
+            data = json.loads(inp.read())
 
-    req = urllib2.Request(settings.WEBSITE_STATUS_URL)
-    req.add_header('Content-Type', 'application/json')
-    response = urllib2.urlopen(req, json.dumps(data))
+        req = urllib2.Request(settings.WEBSITE_STATUS_URL)
+        req.add_header('Content-Type', 'application/json')
+        response = urllib2.urlopen(req, json.dumps(data))
+    except IOError:
+        print('Could not send status update to website')
 
 
 def poll_website():
