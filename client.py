@@ -92,10 +92,9 @@ def protocol(address):
             ],
             stdin=PIPE,
             stdout=PIPE,
-            stderr=PIPE,
-            timeout=settings.ETHEREUM_TIMEOUT
+            stderr=PIPE
         )
-        output, err = p.communicate()
+        output, err = p.communicate(timeout=settings.ETHEREUM_TIMEOUT)
         returncode = p.returncode
     else:
         returncode = 0
