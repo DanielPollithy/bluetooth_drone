@@ -32,7 +32,7 @@ WEBSITE_POLLING_SLEEP = 10  # seconds
 WEBSITE_POLLING_URL = 'http://iotwist.com:8200/api/drone/bookings/{}'.format(CLIENT_ETHEREUM_ADDRESS)
 WEBSITE_STATUS_URL =  'http://iotwist.com:8200/api/drone/status/{}'.format(CLIENT_ETHEREUM_ADDRESS)
 
-RSSI_DISTANCE = 20
+RSSI_DISTANCE = 10
 MAX_RSSI_TRY_COUNT = 10000
 
 from subprocess import Popen, PIPE
