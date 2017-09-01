@@ -149,6 +149,8 @@ def run_server():
                 bluetooth_routine()
             except bluetooth.BluetoothError as e:
                 print(e.message)
+            except StandardError:
+                print('Client disconnected')
     except KeyboardInterrupt:
         print('keyboard interrupt')
 
