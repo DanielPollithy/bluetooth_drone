@@ -13,7 +13,7 @@ ETHEREUM_TIMEOUT = 7
 
 
 # for demo purpose
-DEMO = True
+DEMO = False
 
 
 BT_SLEEP = 0.01  # seconds
