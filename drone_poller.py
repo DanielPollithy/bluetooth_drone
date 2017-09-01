@@ -31,7 +31,7 @@ def poll_website():
     print('poll_website')
     print(data)
     for booked_station in data:
-        if booked_station['id'] and booked_station['id'] not in booking_history and \
+        if 'id' in booked_station and booked_station['id'] not in booking_history and \
                 booked_station['station']:
             print('received a new booking')
             booking_history.append(booked_station['id'])
