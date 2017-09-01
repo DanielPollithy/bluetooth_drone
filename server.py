@@ -132,25 +132,22 @@ def run(server_sock):
 
 
 def bluetooth_routine():
-    server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-    port = 0x1001
-    server_sock.bind(("", port))
-    server_sock.listen(1)
-    print('Bluetooth server listening')
-    run(server_sock)
-    server_sock.close()
+    try:
+        server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+        port = 0x1001
+        server_sock.bind(("", port))
+        server_sock.listen(1)
+        print('Bluetooth server listening')
+        run(server_sock)
+    except:
+        server_sock.close()
     time.sleep(1)
 
 
 def run_server():
     try:
         while True:
-            try:
-                bluetooth_routine()
-            except bluetooth.BluetoothError as e:
-                print(e.message)
-            except StandardError:
-                print('Client disconnected')
+            bluetooth_routine()
     except KeyboardInterrupt:
         print('keyboard interrupt')
 
