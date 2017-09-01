@@ -44,7 +44,7 @@ print(WEBSITE_STATUS_URL)
 # client
 BT_DISCOVERY_DURATION = 3
 RSSI_DISTANCE = 1
-MAX_RSSI_TRY_COUNT = 1000
+MAX_RSSI_TRY_COUNT = 100
 
 from subprocess import Popen, PIPE
 import re

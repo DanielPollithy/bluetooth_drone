@@ -145,7 +145,10 @@ def bluetooth_routine():
 def run_server():
     try:
         while True:
-            bluetooth_routine()
+            try:
+                bluetooth_routine()
+            except bluetooth.BluetoothError as e:
+                print(e.message)
     except KeyboardInterrupt:
         print('keyboard interrupt')
 
